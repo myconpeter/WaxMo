@@ -40,6 +40,14 @@ import PayOut from "./pages/adminPage/PayOut";
 import AddDaily from "./pages/adminPage/AddDaily";
 import ErrorPage from "./pages/ErrorPage";
 import TermsAndCondition from "./pages/TermsAndCondition";
+import EmailConfirmed from "./components/EmailConfirmed";
+import ResetConfirmed from "./components/ResetConfirmed";
+
+
+// private Route
+import PrivateRoute from "./components/PrivateRoute";
+import RecoverEmail from "./pages/RecoveryEmail";
+import VerificationConfirmed from "./components/VerificationConfirmed";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -49,40 +57,47 @@ const router = createBrowserRouter(
       <Route path="login" element={<LoginPage />} />
       <Route path="signup" element={<SignupPage />} />
       <Route path="recoverpassword" element={<RecoverPassword />} />
+      <Route path="recoveremail" element={<RecoverEmail />} />
       <Route path="termandcondition" element={<TermsAndCondition />} />
+      <Route path="emailconfirmed" element={<EmailConfirmed />} />
+      <Route path="resetconfirmed" element={<ResetConfirmed />} />
+      {/* verified */}
+      <Route path="emailverified/:userId/:resetString" element={<VerificationConfirmed />} />
 
 
 
 
-      <Route path="home" element={<HomeLayout />}>
-        <Route path="homepage" element={<HomePage />} />
-        <Route path="notifications" element={<Notifications />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="settings" element={<Settings />} />
-        <Route path="me" element={<Me />} />
-        <Route path="analysis" element={<Analysis />} />
-        <Route path="shareinfo" element={<ShareInfo />} />
-        <Route path="buyshare" element={<BuyShare />} />
-        <Route path="infomation" element={<Information />} />
-        <Route path="about" element={<About />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="faq" element={<Faq />} />
-        <Route path="updatename" element={<UpdateName />} />
-        <Route path="updatepassword" element={<UpdatePassword />} />
-        <Route path="updatemobileno" element={<UpdateMobileNO />} />
-        <Route path="updateaccountdetails" element={<UpdateAccountDetails />} />
+      <Route path="" element={<PrivateRoute />}>
+        <Route path="home" element={<HomeLayout />}>
+          <Route path="homepage" element={<HomePage />} />
+          <Route path="notifications" element={<Notifications />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="me" element={<Me />} />
+          <Route path="analysis" element={<Analysis />} />
+          <Route path="shareinfo" element={<ShareInfo />} />
+          <Route path="buyshare" element={<BuyShare />} />
+          <Route path="infomation" element={<Information />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="faq" element={<Faq />} />
+          <Route path="updatename" element={<UpdateName />} />
+          <Route path="updatepassword" element={<UpdatePassword />} />
+          <Route path="updatemobileno" element={<UpdateMobileNO />} />
+          <Route path="updateaccountdetails" element={<UpdateAccountDetails />} />
+        </Route>
 
-      </Route>
-
-      <Route path="admin" element={<HomeLayout />}>
-        <Route index element={<AdminHome />} />
-        <Route path="sendsingle" element={<Single />} />
-        <Route path="sendall" element={<Multiple />} />
-        <Route path="totalusers" element={<TotalRegistered />} />
-        <Route path="payout" element={<PayOut />} />
-        <Route path="addDaily" element={<AddDaily />} />
+        <Route path="admin" element={<HomeLayout />}>
+          <Route index element={<AdminHome />} />
+          <Route path="sendsingle" element={<Single />} />
+          <Route path="sendall" element={<Multiple />} />
+          <Route path="totalusers" element={<TotalRegistered />} />
+          <Route path="payout" element={<PayOut />} />
+          <Route path="addDaily" element={<AddDaily />} />
 
 
+
+        </Route>
 
       </Route>
 

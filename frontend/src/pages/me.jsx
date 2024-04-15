@@ -3,12 +3,45 @@ import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+import { logout } from '../slices/authSlice'
+import { useLogoutMutation } from '../slices/userApiSlice';
+
+import { toast } from 'react-toastify'
 
 
 const me = () => {
+
+    const { userInfo } = useSelector((state) => state.auth)
+    const { firstName, lastName } = userInfo.data
+    const fullName = firstName + ' ' + lastName
+
+
+    const [logoutApiCall] = useLogoutMutation()
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const logoutHandler = async () => {
+        try {
+            await logoutApiCall().unwrap();
+            dispatch(logout())
+            navigate('/')
+
+
+        } catch (err) {
+            console.log(err)
+
+        }
+    }
     return (
         <div className='mt-3 p-2 '>
-            <Menu PageName='Micheal Peter' />
+            <Menu PageName={fullName} />
 
 
             <div className='mt-8'>
@@ -67,13 +100,13 @@ const me = () => {
 
                 </Link>
 
-                <Link to='/' className=' flex items-center justify-between h-8 w-full bg-danger  mt-4 mb-16 rounded-md p-3 '>
+                <div onClick={logoutHandler} className='flex items-center justify-between h-8 w-full bg-danger  mt-4 mb-16 rounded-md p-3 '>
                     <p className='text-black font-semibold text-sm'>Logout</p>
 
                     <IoLogOut className='text-black' />
 
 
-                </Link>
+                </div>
             </div>
         </div >
     )

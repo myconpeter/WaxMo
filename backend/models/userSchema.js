@@ -33,6 +33,19 @@ const userSchema = mongoose.Schema({
         type: String,
 
     },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    isAnInvestor: {
+        type: Boolean,
+        default: false
+    },
+    currentAmount: {
+        type: Number,
+        default: 0
+    },
+
 
     verified: Boolean
 

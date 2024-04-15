@@ -15,7 +15,7 @@ import { errorHandler, notFount } from './middlewares/errorMiddleware.js'
 const app = express()
 
 dotenv.config()
-const port = process.env.PORT || 8000
+const port = process.env.PORT
 
 import { verifyEmail } from './controllers/signUpController.js'
 

@@ -4,9 +4,23 @@ import { FaTimes } from "react-icons/fa";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { useLogoutMutation } from '../slices/userApiSlice';
+
+import { logout } from '../slices/authSlice'
+
+
+
+
+
 
 
 const Menu = (props) => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const { userInfo } = useSelector((state) => state.auth)
+
 
     const [nav, setNav] = useState(false);
     const history = useNavigate()
@@ -51,7 +65,21 @@ const Menu = (props) => {
             ref: "/home/contact"
         }
 
+
     ]
+    const [logoutApiCall] = useLogoutMutation()
+    const logoutHandler = async () => {
+        try {
+            await logoutApiCall().unwrap();
+            dispatch(logout())
+            navigate('/')
+
+
+        } catch (err) {
+            console.log(err)
+
+        }
+    }
 
 
 
@@ -94,17 +122,21 @@ const Menu = (props) => {
                         ))}
                         <li className='text-sm text-danger py-4 px-4'>
 
-                            <Link to='/' > Logout </Link>
+                            <div onClick={logoutHandler} > Logout </div>
 
 
                         </li>
+                        {userInfo.data.isAdmin ? (<>
+                            <li className='text-sm text-overLay py-4 px-4'>
 
-                        <li className='text-sm text-overLay py-4 px-4'>
-
-                            <Link to='/admin' > Admin Panel</Link>
+                                <Link to='/admin' > Admin Panel</Link>
 
 
-                        </li>
+                            </li>
+
+                        </>) : (<> </>)}
+
+
                     </ul>
                 </div>
             )}

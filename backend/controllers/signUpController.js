@@ -13,7 +13,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     const userExist = await User.findOne({ email })
     if (userExist) {
-        res.status(400)
+        res.status(401)
         throw new Error('This Account Already Exist')
     }
     const createdUser = await User.create({
@@ -36,55 +36,57 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const verifyEmail = asyncHandler(async (req, res) => {
     const { userId, uniqueString } = req.params
-    const foundUserVerification = await UserVerification.findOne({ userId })
-    if (foundUserVerification) {
-        const expiresAt = foundUserVerification.expiresAt
-        const hashedUniqueString = foundUserVerification.uniqueString
+    const verifiedLink = `http://localhost:3000/emailverified/:${userId}/:${uniqueString}`
+    let message = ''
+    const userVerification = await UserVerification.findOne({ userId })
+    if (!userVerification) {
+        message = 'Verification link not found'
+        return res.redirect(`${verifiedLink}?error=true&message=${message}`)
+    }
+    const expiresAt = userVerification.expiresAt
+    const hashedUniqueString = userVerification.uniqueString
 
-        if (expiresAt < Date.now()) {
-            // VERIFICATION LINK EXPIRED
-            const deleteExpiredVerification = await UserVerification.deleteOne({ userId })
-            if (deleteExpiredVerification) {
-                const deleteExpiredUser = await User.deleteOne({ userId })
-                if (deleteExpiredUser) {
-                    return res.send('PLEASE REGISTER AGAIN')
-
-                } else {
-                    return res.send('CANNOT DELETE EXPIRED USER, PLEASE REGISTER AGAIN')
-                }
-
-            } else {
-                return res.send('CANNOT DELETE EXPIRED VERIFICATION')
-            }
-        } else {
-            //VERIFICATION VALID
-            const compareUniqueString = await bcrypt.compare(uniqueString, hashedUniqueString)
-            if (compareUniqueString) {
-                // THIS USER IS VERY VALID
-                const updateUserVerified = await User.updateOne({ _id: userId }, { verified: true })
-                if (updateUserVerified) {
-                    const deleteUpdatedUserVerification = await UserVerification.deleteOne({ userId })
-                    if (deleteUpdatedUserVerification) {
-                        return res.send('ALL DONE YOU CAN NOW LOGIN')
-                    } else {
-                        return res.send('USER VERIFICATION NOT DELETED')
-                    }
-
-                } else {
-                    return res.send('USER VERIFIED CANNOT BE UPDATED')
-                }
-
-            } else {
-                // ILLEGAL UNIQUE STRING
-                return res.send('YOU CANNOT COMPLETE THIS ACTIVITIES')
-            }
-
+    if (expiresAt < Date.now()) {
+        const deleteExpiredVerification = await UserVerification.deleteOne({ userId })
+        if (!deleteExpiredVerification) {
+            message = 'Internal Error'
+            return res.redirect(`${verifiedLink}?error=true&message=${message}`)
         }
+
+        const deleteExpiredUser = await User.deleteOne({ userId })
+        if (!deleteExpiredUser) {
+            message = 'Internal Error'
+            return res.redirect(`${verifiedLink}?error=true&message=${message}`)
+        }
+        message = 'Internal Error, Please register again'
+        return res.redirect(`${verifiedLink}?error=true&message=${message}`)
 
 
     } else {
-        return res.send('LINK CANNOT BE FOUND, REGISTER AGAIN')
+        //link not expires
+        const compareUniqueString = await bcrypt.compare(uniqueString, hashedUniqueString)
+        if (!compareUniqueString) {
+            message = 'Internal Error, cannot process request, please check your mail'
+            return res.redirect(`${verifiedLink}?error=true&message=${message}`)
+        }
+        const updateUserVerified = await User.updateOne({ _id: userId }, { verified: true })
+        if (!updateUserVerified) {
+            message = 'Internal Error'
+            return res.redirect(`${verifiedLink}?error=true&message=${message}`)
+        }
+        const deleteUpdatedUserVerification = await UserVerification.deleteOne({ userId })
+        if (!deleteUpdatedUserVerification) {
+            message = 'Internal Error'
+            return res.redirect(`${verifiedLink}?error=true&message=${message}`)
+        }
+
+
+        return res.redirect(verifiedLink)
+
+
     }
+
+
 })
 
 

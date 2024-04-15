@@ -1,11 +1,28 @@
-import React from 'react'
-import Menu from '../components/menu'
-import { Link } from 'react-router-dom'
+
+import { Link, useNavigate } from 'react-router-dom';
+import { MdArrowBackIosNew } from "react-icons/md";
+import { BiSolidError } from "react-icons/bi";
 
 const ErrorPage = () => {
+    const history = useNavigate()
     return (
         <div>
-            <Menu PageName='Error 404' />
+            <div className='flex items-center justify-between  p-2  h-fit w-screen'>
+
+                <div className=''>
+                    <button onClick={() => history(-1)} className=' text-overLay bg-white   mr-4  text-xl   '>{<MdArrowBackIosNew />}
+                    </button>
+                </div>
+
+                <div className="">
+                    <p className="text-xl font-bold text-center text-overLay">Page not found</p>
+
+                </div>
+                <div className=''>
+                    <button onClick={() => setNav(!nav)} className=' text-overLay text-xl  bg-white z-10 relative mr-4'></button>
+                </div>
+
+            </div>
 
             <div className='mt-20 flex flex-col items-center'>
                 <div>
@@ -14,6 +31,11 @@ const ErrorPage = () => {
 
                 <div className='mt-5'>
                     <p className='text-lg'> Sorry, this page isn&#x27;t available</p>
+                </div>
+
+
+                <div className="flex items-center justify-center mb-10 mt-5">
+                    <BiSolidError className="text-6xl text-overLay" />
                 </div>
 
                 <div>

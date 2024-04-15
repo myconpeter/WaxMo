@@ -1,12 +1,36 @@
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLoginMutation } from '../slices/userApiSlice'
+import { setCredentials } from '../slices/authSlice'
+import Spinner from '../loaders/Spinner'
+
+
+
+// toastify
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+import { toast } from 'react-toastify'
+
 import { FaUser } from "react-icons/fa6";
 import { IoMdEye } from "react-icons/io";
 import { IoMdEyeOff } from "react-icons/io";
-import { Link } from "react-router-dom";
-import { useState } from "react";
 import BackGround from "../assets/welcomePage-backgroundImage.jpg"
 
 
 const loginPage = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const [login, { isLoading }] = useLoginMutation()
+
+    const { userInfo } = useSelector((state) => state.auth)
+
     const [see, setSee] = useState(false)
 
     const toggle = (i) => {
@@ -19,9 +43,32 @@ const loginPage = () => {
         }
     }
 
-    const onSubmit = (e) => {
+
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate('/home/homepage')
+
+        }
+    }, [navigate, userInfo])
+
+    const onSubmit = async (e) => {
         e.preventDefault()
-        console.log('lol')
+
+        const res = await login({ email, password })
+
+
+        if (res.error) {
+            toast.error(res.error.data.message)
+
+
+        } else {
+
+            dispatch(setCredentials({ ...res }))
+            navigate('/home/homepage')
+            toast.success(`Welcome ${res.data.name}`)
+
+        }
 
     }
 
@@ -29,12 +76,8 @@ const loginPage = () => {
 
     return (
 
-        <div
-            className=""
-
-
-        >
-
+        <div className="">
+            <ToastContainer />
             <div className="relative">
                 <img className="" src={BackGround} alt="background" />
                 <div className="bg-overLay absolute inset-0 opacity-50 w-screen h-36"></div>
@@ -60,9 +103,10 @@ const loginPage = () => {
 
                                 <p className="text-overLay text-sm font-semibold">Email</p>
 
-                                <div className="flex  w-screen   ">
+                                <div className="flex  w-screen">
+                                    <input type="email" className="bg-lightGray  w-5/6  focus:outline-none" value={email} onChange={(e) => (setEmail(e.target.value))} />
 
-                                    <input type="email" id="email" className="bg-lightGray  w-5/6  focus:outline-none" />
+
 
 
                                 </div>
@@ -74,7 +118,8 @@ const loginPage = () => {
 
                                 <div className="flex  w-screen   ">
 
-                                    <input type={see === true ? "text" : "password"} id="password" className="bg-lightGray border-overLay   py-2 focus:outline-none w-4/6  " />
+
+                                    <input value={password} onChange={(e) => (setPassword(e.target.value))} type={see === true ? "text" : "password"} id="password" className="bg-lightGray border-overLay   py-2 focus:outline-none w-4/6  " />
                                     <button onClick={toggle}>{see === true ? <IoMdEye className="text-overLay" /> : <IoMdEyeOff className="text-overLay" />}</button>
 
                                 </div>
@@ -83,9 +128,9 @@ const loginPage = () => {
 
 
                             <div className="pb-5 flex  justify-end">
-                                <Link to="/recoverpassword" className="text-sm">Forgotten Password ? </Link>
+                                <Link to="/recoveremail" className="text-sm">Forgotten Password ? </Link>
                             </div>
-                            <Link to='/home/homepage' className="bg-overLay font-medium p-2 text-white text-center uppercase w-full rounded-full">Login</Link>
+                            <button type='submit' to='/home/homepage' className="bg-overLay font-medium p-2 text-white text-center uppercase w-full rounded-full">{isLoading ? 'please wait ...' : 'Login'}</button>
 
                             {/* the sign up function */}
                             <div className="flex flex-col items-end pt-2 mt-5 space-y-1 ">

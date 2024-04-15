@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { FaTimes } from "react-icons/fa";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 

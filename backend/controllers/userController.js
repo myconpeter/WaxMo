@@ -31,6 +31,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // desc @logout user / token destroy
 // route POST api/users/logout
 //@access private
+
 const logoutUser = asyncHandler(async (req, res) => {
     res.cookie('jwt', '', {
         httpOnly: true,

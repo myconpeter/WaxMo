@@ -5,8 +5,25 @@ import { Link } from "react-router-dom";
 import BackGround from "../assets/welcomePage-backgroundImage.jpg"
 import logo from "../assets/logo.svg"
 
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+import { useEffect } from "react";
+
 
 const loginORsignup = () => {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const { userInfo } = useSelector((state) => state.auth)
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate('/home/homepage')
+
+        }
+    }, [navigate, userInfo])
     return (
 
         <div className="">

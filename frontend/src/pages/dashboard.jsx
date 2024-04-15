@@ -12,12 +12,30 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { FaUser } from "react-icons/fa6";
 
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+import { useEffect } from "react";
+
 
 
 
 const dashboard = () => {
 
-    const [see, setSee] = useState(false)
+    const navigate = useNavigate()
+
+
+    const { userInfo } = useSelector((state) => state.auth)
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate('/home/dashboard')
+
+        }
+    }, [navigate, userInfo])
+
+
+    const [see, setSee] = useState(true)
 
     const toggle = (i) => {
         i.preventDefault();
@@ -30,7 +48,7 @@ const dashboard = () => {
         }
     }
 
-    const Amount = '₦10000';
+    const Amount = '₦' + " " + userInfo.data.currentAmount + '.00';
 
 
 
@@ -45,7 +63,7 @@ const dashboard = () => {
                     <div className="flex justify-between items-center">
                         <div className="mt-2 w-fit  ">
 
-                            <p className="text-md font-semibold text-darkGreen">Hi, Micheal </p>
+                            <p className="text-md font-semibold text-darkGreen">Hi, {userInfo.data.firstName} </p>
 
                         </div>
                         <div className="bg-darkGray px-0.5 h-full  mr-4 rounded-lg ">
@@ -53,13 +71,23 @@ const dashboard = () => {
                         </div>
                     </div>
 
+
                     <div className="h-20 z-50 w-full bg-darkGreen mt-2   rounded-3xl pt-2">
 
-                        <div className="flex items-center justify-center bg-lightGray w-fit px-8 rounded-r-full rounded-l-none text-black ">
-                            <MdVerified className="text-overLay" />
+                        {userInfo.data.isAnInvestor ? (<>
+                            <div className="flex items-center justify-center bg-lightGray w-fit px-8 rounded-r-full rounded-l-none text-black ">
+                                <MdVerified className="text-overLay" />
 
-                            <p className="text-sm">1% limited patrner</p>
-                        </div>
+                                <p className="text-sm">1% limited partner</p>
+                            </div>
+                        </>) : (<>
+                            <div className="flex items-center justify-center bg-lightGray w-fit px-8 rounded-r-full rounded-l-none text-black ">
+
+
+                                <p className="text-sm">No Active Investment</p>
+                            </div>
+                        </>)}
+
 
                         <div className="text-white flex  justify-between mx-2 pt-2 text-xl font-bold">
                             <p className="text-sm">{see === true ? '****' : Amount}</p>
