@@ -18,12 +18,14 @@ dotenv.config()
 const port = process.env.PORT
 
 import { verifyEmail } from './controllers/signUpController.js'
+import { verifyResetLink } from './controllers/resetController.js'
 
 // app.get('/', (req, res) => {
 //     res.send('okkkk')
 // })
 
 app.get('/verify/:userId/:uniqueString', verifyEmail)
+app.get('/verifyreset/:userId/:resetString', verifyResetLink)
 
 
 app.use(express.json())

@@ -8,6 +8,10 @@ import { loginUser, logoutUser } from '../controllers/userController.js'
 
 import { protect } from '../middlewares/authMiddleware.js'
 
+// reset password controllers
+import { handleEmail, changePassword } from '../controllers/resetController.js'
+
+
 const router = express.Router()
 
 
@@ -20,6 +24,11 @@ router.post('/login', loginUser)
 
 // logout User
 router.post('/logout', logoutUser)
+
+// here are the reset routes 
+
+router.post('/resetEmail', handleEmail)
+router.post('/changePassword', changePassword)
 
 
 export default router
