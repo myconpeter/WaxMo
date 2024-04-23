@@ -1,7 +1,7 @@
 import express from 'express'
 
 // sign up controllers
-import { registerUser, verifyEmail } from '../controllers/signUpController.js'
+import { registerUser } from '../controllers/signUpController.js'
 
 // user controllers
 import { loginUser, logoutUser } from '../controllers/userController.js'

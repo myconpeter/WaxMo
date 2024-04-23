@@ -5,41 +5,13 @@ import { MdArrowBackIosNew } from "react-icons/md";
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useResetEmailMutation } from '../slices/userResetSlice'
-
+import { useResetEmailMutation } from '../slices/userApiSlice'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import { toast } from 'react-toastify'
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-
-const validationSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Email is required'),
-});
-
-
 
 const RecoverEmail = () => {
-
-    const formik = useFormik({
-        initialValues: {
-            email: '',
-        },
-        validationSchema: validationSchema,
-        onSubmit: async (values) => {
-            const res = await resetEmail({ email: values.email });
-            if (res.error) {
-                console.log(res.error);
-                toast.error(res.error.message); // Display error message using toast
-            } else {
-                navigate('/resetconfirmed');
-            }
-        },
-    });
-
-
-
     const [email, setEmail] = useState('')
 
     const navigate = useNavigate()
@@ -48,27 +20,22 @@ const RecoverEmail = () => {
 
     const { userInfo } = useSelector((state) => state.auth)
 
-
-
-
-
-
     useEffect(() => {
         if (userInfo) {
             navigate('/home/homepage')
         }
     }, [navigate, userInfo])
 
-    const onSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        console.log(email)
 
         const res = await resetEmail({ email })
-        console.log(email)
-        console.log(res)
 
 
         if (res.error) {
-            console.log(res.error)
+
+            toast.error(res.error.data.message)
 
         } else {
             navigate('/resetconfirmed')
@@ -96,11 +63,12 @@ const RecoverEmail = () => {
 
                             <p className="font-bold">Email</p>
                         </div>
-                        <form onSubmit={formik.handleSubmit} className="pt-10 p-10 flex flex-col">
-                            <div className='flex items-center justify-center mt-10'>
-                                <button onClick={() => history(-1)} className=' text-overLay bg-white   mr-4  text-xl   '>{<MdArrowBackIosNew />}
-                                </button>
-                            </div>
+                        <div className='flex items-center justify-center mt-20'>
+                            <Link to='/login' className=' text-overLay bg-white   mr-4  text-xl   '>{<MdArrowBackIosNew />}
+                            </Link>
+                        </div>
+                        <form onSubmit={handleSubmit} className="pt-10 p-10 flex flex-col">
+
 
                             <div className="flex flex-col  mt-24 mb-10 border-b-2 border-overLay w-full  items-start text-lg pt-2">
                                 <p className="text-overLay mb-5 font-semibold">Email</p>
@@ -110,15 +78,14 @@ const RecoverEmail = () => {
                                         placeholder="Enter your Email Address"
                                         id="email"
                                         className="bg-lightGray border-overLay w-4/6 focus:outline-none"
-                                        {...formik.getFieldProps('email')}
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+
                                     />
                                 </div>
-                                {formik.touched.email && formik.errors.email ? (
-                                    <div className="text-danger text-xs">{formik.errors.email}</div>
-                                ) : null}
                             </div>
 
-                            <button type="submit" className="bg-overLay font-medium p-2  text-white uppercase w-full rounded-full">Next</button>
+                            <button type="submit" className="bg-overLay font-medium p-2  text-white w-full rounded-full">{isLoading ? 'Please wait...' : 'Next'}</button>
                         </form>
 
 

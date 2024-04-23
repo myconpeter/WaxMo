@@ -31,7 +31,7 @@ const ResetConfirmed = () => {
                         <div>
                             <div>
                                 <p className="m-4 text-center text-2xl font-semibold">
-                                    We've sent you a password reset link via email.
+                                    We've sent you a password reset link via Email.
                                 </p>
                                 <p className="m-4 mt-10 text-center text-xl">
                                     Please check your inbox and click the verification link.</p>

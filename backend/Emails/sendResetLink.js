@@ -7,6 +7,13 @@ const sendResetLink = async ({ _id, email }, res) => {
     const resetString = uuidv4() + _id
     const activateLink = `${currentUrl}/verifyreset/${_id}/${resetString}`;
 
+    const deleteAllPasswordLink = await ResetSchema.deleteMany({ userId: _id })
+    console.log(deleteAllPasswordLink)
+    if (!deleteAllPasswordLink) {
+        res.status(401)
+        throw new Error('cannot delete all password in db')
+    }
+
 
     const sendResetOptions = {
         from: process.env.AUTH_EMAIL,
@@ -50,6 +57,8 @@ const sendResetLink = async ({ _id, email }, res) => {
             </html>
         `
     }
+
+
 
     const newResetLink = await ResetSchema.create({
         userId: _id,

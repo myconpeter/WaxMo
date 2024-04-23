@@ -10,13 +10,14 @@ let transporter = nodemailer.createTransport({
     secure: true,
     auth: {
         user: process.env.AUTH_EMAIL,
-        pass: process.env.AUTH_PASSWORD
+        pass: process.env.AUTH_PASSWORD,
+        name: process.env.EMAIL_NAME
     }
 });
 
 // VERIFY TRANSPORTER
 transporter.verify((error, success) => {
-    error ? console.log('error') : console.log('success')
+    console.log(error ? 'transporter error' : 'transporter success')
 })
 
 export default transporter

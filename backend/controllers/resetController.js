@@ -10,7 +10,7 @@ const handleEmail = asyncHandler(async (req, res) => {
     const searchUser = await User.findOne({ email })
     if (!searchUser) {
         res.status(401)
-        throw new Error('Email not found')
+        throw new Error('Email Address not found')
     }
     if (!searchUser.verified === true) {
         res.status(401)
@@ -22,10 +22,12 @@ const handleEmail = asyncHandler(async (req, res) => {
 
 const verifyResetLink = asyncHandler(async (req, res) => {
     const { userId, resetString } = req.params
-    console.log(userId, resetString)
+    const redirectLink = `http://localhost:3000/changepassword/${userId}/${resetString}`
+
     const foundResetString = await ResetSchema.findOne({ userId })
     if (!foundResetString) {
-        return res.send('reset not found')
+        let message = 'Invalid Credentials'
+        return res.redirect(`${redirectLink}?error=true&message=${message}`)
     }
     const expiresAt = foundResetString.expiresAt
     const hashedResetString = foundResetString.resetString
@@ -33,16 +35,19 @@ const verifyResetLink = asyncHandler(async (req, res) => {
     if (expiresAt < Date.now()) {
         const deleteExpiredLink = await ResetSchema.deleteOne({ userId })
         if (deleteExpiredLink) {
-            return res.send('please reset again')
+            let message = 'This Link has expired . Please reset  your password again.'
+            return res.redirect(`${redirectLink}?error=true&message=${message}`)
         } else {
-            return res.send('resetlink not deleted')
+            let message = 'Invalid Credentials'
+            return res.redirect(`${redirectLink}?error=true&message=${message}`)
         }
     } else {
         const compareResetLink = await bcrypt.compare(resetString, hashedResetString)
         if (!compareResetLink) {
-            return res.send('scammer alert')
+            let message = 'Invalid Credentials'
+            return res.redirect(`${redirectLink}?error=true&message=${message}`)
         }
-        return res.send('form here')
+        return res.redirect(redirectLink)
     }
 })
 
@@ -50,12 +55,14 @@ const changePassword = asyncHandler(async (req, res) => {
     const { userId, resetString, password, confirmPassword } = req.body
     const correctResetLink = await ResetSchema.findOne({ userId })
     if (!correctResetLink) {
-        return res.send('invalid link')
+        res.status(401)
+        throw new Error('not oo available')
     }
     if (correctResetLink.expiresAt < Date.now()) {
         const deleteExpiredResetLink = await ResetSchema.deleteOne({ userId })
         if (!deleteExpiredResetLink) {
-            return res.send('cannot delete link')
+            res.status(401)
+            throw new Error('cannot delete link')
         }
 
         return res.send('link don expire')
@@ -64,22 +71,26 @@ const changePassword = asyncHandler(async (req, res) => {
         if (!compareResetString) {
             return res.send('scammer alert')
         }
-        if (password !== confirmPassword) {
-            res.send('not same password')
+        if (password != confirmPassword) {
+            res.status(401)
+            throw new Error('not same password')
         }
 
         const userToUpdate = await User.findOne({ _id: userId })
         if (!userToUpdate) {
-            return res.send('no user found')
+            res.status(401)
+            throw new Error('no user found')
         }
         userToUpdate.password = password
         const saveUpdatedPassword = await userToUpdate.save()
         if (!saveUpdatedPassword) {
-            res.send('user not saved')
+            res.status(401)
+            throw new Error('user not saved')
         }
         const deleteResetLink = await ResetSchema.deleteOne({ userId })
         if (!deleteResetLink) {
-            res.send('reset link !deleted')
+            res.status(401)
+            throw new Error('reset link !deleted')
         }
         res.status(200).json({
             saveUpdatedPassword
@@ -88,6 +99,8 @@ const changePassword = asyncHandler(async (req, res) => {
     }
 
 })
+
+
 
 
 export {

@@ -63,6 +63,7 @@ const router = createBrowserRouter(
       <Route path="resetconfirmed" element={<ResetConfirmed />} />
       {/* verified */}
       <Route path="emailverified/:userId/:resetString" element={<VerificationConfirmed />} />
+      <Route path="changepassword/:userId/:resetString" element={<RecoverPassword />} />
 
 
 
