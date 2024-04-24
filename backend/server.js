@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
+import path from 'path'
 
 
 // ROUTES
@@ -27,6 +28,17 @@ import { verifyResetLink } from './controllers/resetController.js'
 app.get('/verify/:userId/:uniqueString', verifyEmail)
 app.get('/verifyreset/:userId/:resetString', verifyResetLink)
 
+if (process.env.NODE_ENV === "production") {
+    const __dirname = path.resolve()
+    app.use(express.static(path.join(__dirname, 'frontend/dist')))
+    app.get('*', (req, res) =>
+        res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'))
+    );
+    console.log('joining')
+} else {
+    app.get('/', (req, res) => res.send('Server is ready!'))
+}
+
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -41,7 +53,7 @@ app.use(notFount)
 let mongoURL = ''
 
 if (process.env.NODE_ENV === 'production') {
-    mongoURL = process.env.MONGO_URI_PRODUCTION
+    mongoURL = process.env.MONGO_URI_PROD
     console.log('Running in Production environment');
 } else if (process.env.NODE_ENV === 'local') {
     mongoURL = process.env.MONGO_URI_LOCAL
