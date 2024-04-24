@@ -10,7 +10,7 @@ const sendVerification = async ({ _id, email }, res) => {
 
     // MAILOPTIONS
     const sendMailOptions = {
-        from: 'omo',
+        from: process.env.AUTH_EMAIL,
         to: email,
         subject: `Welcome to WaxMo`,
         html: `
