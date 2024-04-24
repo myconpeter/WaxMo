@@ -3,7 +3,7 @@ import UserVerification from '../models/userVerification.js'
 import transporter from './transporter.js'
 
 const sendVerification = async ({ _id, email }, res) => {
-    const currentUrl = 'http://localhost:5000';
+    const currentUrl = process.env.NODE_ENV === 'production' ? 'https://waxmo.onrender.com' : 'http://localhost:5000';
     const uniqueString = uuidv4() + _id
     const activateLink = `${currentUrl}/verify/${_id}/${uniqueString}`;
 

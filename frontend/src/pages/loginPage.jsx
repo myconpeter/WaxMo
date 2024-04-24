@@ -94,8 +94,8 @@ const loginPage = () => {
 
                                 <p className="font-bold">Login</p>
                             </div>
-                            <form onSubmit={onSubmit} className="pt-10 p-10 flex flex-col md:flex">
-                                <div className="flex flex-col border-b-2 border-overLay items-center justify-center  text-lg mb-2">
+                            <form onSubmit={onSubmit} className="pt-14 p-10 flex flex-col md:flex">
+                                <div className="flex flex-col border-b-2 border-overLay md:items-center md:justify-center  text-lg mb-2">
 
                                     <p className="text-overLay text-sm font-semibold">Email</p>
 
@@ -112,10 +112,10 @@ const loginPage = () => {
 
                                     <p className="text-overLay text-sm font-semibold">Password</p>
 
-                                    <div className="flex  w-screen md:w-full  ">
+                                    <div className="flex  w-screen md:w-full">
 
 
-                                        <input value={password} onChange={(e) => (setPassword(e.target.value))} type={see === true ? "text" : "password"} id="password" className="bg-lightGray border-overLay   py-2 focus:outline-none w-5/6  " />
+                                        <input value={password} onChange={(e) => (setPassword(e.target.value))} type={see === true ? "text" : "password"} id="password" className="bg-lightGray border-overLay   py-2 focus:outline-none w-4/6  " />
                                         <button onClick={toggle}>{see === true ? <IoMdEye className="text-overLay" /> : <IoMdEyeOff className="text-overLay" />}</button>
 
                                     </div>

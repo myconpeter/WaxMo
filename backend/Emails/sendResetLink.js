@@ -3,7 +3,7 @@ import ResetSchema from '../models/resetSchema.js'
 import { v4 as uuidv4 } from 'uuid'
 
 const sendResetLink = async ({ _id, email }, res) => {
-    const currentUrl = 'http://localhost:5000';
+    const currentUrl = process.env.NODE_ENV === 'production' ? 'https://waxmo.onrender.com' : 'http://localhost:5000';
     const resetString = uuidv4() + _id
     const activateLink = `${currentUrl}/verifyreset/${_id}/${resetString}`;
 
