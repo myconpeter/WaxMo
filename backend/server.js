@@ -21,9 +21,6 @@ const port = process.env.PORT
 import { verifyEmail } from './controllers/signUpController.js'
 import { verifyResetLink } from './controllers/resetController.js'
 
-// app.get('/', (req, res) => {
-//     res.send('okkkk')
-// })
 
 if (process.env.NODE_ENV === "production") {
     const __dirname = path.resolve()
@@ -31,7 +28,7 @@ if (process.env.NODE_ENV === "production") {
     app.get('*', (req, res) =>
         res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'))
     );
-    console.log('joining')
+    
 } else {
     app.get('/', (req, res) => res.send('Server is ready!'))
 }

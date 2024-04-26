@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
+import { SiGmail } from "react-icons/si";
+import { FaFacebookF } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { FaWhatsapp } from "react-icons/fa";
 
 const TermsAndCondition = () => {
 
@@ -188,7 +192,19 @@ const TermsAndCondition = () => {
 
                     </p>
 
-                    <p className=" text-lg font-bold pb-6">contactwaxmo@gmail.com</p>
+                    <div className="flex space-x-4 justify-center my-10 text-overLay">
+                    <a href="mailto:contactwaxmo@gmail.com"target="_blank">
+                    <SiGmail  />
+                    </a>
+
+                    <a href="https://www.facebook.com/ThetallestboYOfficial" target="_blank"><FaFacebookF /></a>
+                    
+                    <a href="https://x.com/waxmo_/" target="_blank">    <FaXTwitter /></a>
+
+
+                   <a href="https://chat.whatsapp.com/B966BJQfiSGDUbHNLbAPyx" target="_blank">  <FaWhatsapp /> </a>
+
+                    </div>
                 </div>
 
 

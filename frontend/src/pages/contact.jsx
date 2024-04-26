@@ -2,6 +2,7 @@ import Menu from "../components/menu"
 import { IoMdMail } from "react-icons/io";
 import { FaFacebookSquare } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
+import { FaXTwitter } from "react-icons/fa6";
 
 
 
@@ -21,9 +22,9 @@ const Contact = () => {
                     <div className="flex space-x-3 px-3">
                         <IoMdMail className="bg-white text-overLay text-xl" />
                         <div className="bg-darkGray w-screen rounded-xl pb-4 p-3 ">
-                            <p className="text-sm font-semibold">
-                                Contactwaxmo@gmail.com
-                            </p>
+                            <a href="mailto:contactwaxmo@gmail.com" target="_blank" className="text-sm font-semibold">
+                                contactwaxmo@gmail.com
+                            </a>
                         </div>
 
                     </div>
@@ -33,9 +34,9 @@ const Contact = () => {
                     <div className="flex space-x-3 px-3">
                         <FaFacebookSquare className="bg-white text-overLay text-xl" />
                         <div className="bg-darkGray  w-screen  rounded-xl pb-4 p-3 ">
-                            <p className="text-sm font-semibold">
+                            <a href="https://www.facebook.com/ThetallestboYOfficial" target="_blank" className="text-sm font-semibold">
                                 WaxMo
-                            </p>
+                            </a>
                         </div>
 
                     </div>
@@ -45,10 +46,24 @@ const Contact = () => {
                     <div className="flex space-x-3 px-3">
                         <IoLogoWhatsapp className="bg-white text-overLay text-xl" />
                         <div className="bg-darkGray w-screen rounded-xl pb-4 p-3 ">
-                            <p className="text-sm font-semibold">
-                                +23412345678
+                            <a href="https://chat.whatsapp.com/B966BJQfiSGDUbHNLbAPyx" target="_blank" className="text-sm font-semibold">
+                               WaxMo
 
-                            </p>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div className="mt-2">
+                    <div className="flex space-x-3 px-3">
+                        <FaXTwitter className="bg-white text-overLay text-xl" />
+                        <div className="bg-darkGray w-screen rounded-xl pb-4 p-3 ">
+                            <a href="https://x.com/waxmo_/" target="_blank" className="text-sm font-semibold">
+                               WaxMo
+
+                            </a>
                         </div>
 
                     </div>

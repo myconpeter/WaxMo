@@ -45,7 +45,7 @@ const MakePayment = () => {
 
 
 
-                    <p className={selected === item.id ? 'text-black text-sm mt-5' : 'text-white text-lg mt-5 overflow-hidden max-h-0'}>{item.description} </p>
+                    <a href={item.link} target="_blank" className={selected === item.id ? 'text-black text-sm mt-5' : ""}>{item.description} </a>
 
                 </div>
             ))}
@@ -60,25 +60,29 @@ const data = [
     {
         id: 1,
         title: "- Udofa Michael -Financial administrator",
-        description: " Link to whatsapp  "
+        link: "https://wa.me/message/EAVJIMQTENVHP1" ,
+        description: " Make Payment  "
     },
 
     {
         id: 2,
         title: "- Peter Ekanem -Financial administrator",
-        description: " Link to whatsapp  "
+        link: "https://wa.me/message/EAVJIMQTENVHP1" ,
+        description: " Make Payment  "
     },
 
     {
         id: 3,
         title: "- Chris Victor -Financial administrator",
-        description: " Link to whatsapp  "
+        link: "https://wa.me/message/EAVJIMQTENVHP1" ,
+        description: " Make Payment  "
     },
 
     {
         id: 4,
         title: "- Udofa Michael -Financial administrator",
-        description: " Link to whatsapp  "
+        link: "https://wa.me/message/EAVJIMQTENVHP1" ,
+        description: " Make Payment  "
     },
 
 ]
