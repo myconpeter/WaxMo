@@ -21,6 +21,9 @@ const port = process.env.PORT
 import { verifyEmail } from './controllers/signUpController.js'
 import { verifyResetLink } from './controllers/resetController.js'
 
+app.get('/verify/:userId/:uniqueString', verifyEmail)
+app.get('/verifyreset/:userId/:resetString', verifyResetLink)
+
 
 if (process.env.NODE_ENV === "production") {
     const __dirname = path.resolve()
@@ -34,8 +37,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 
-app.get('/verify/:userId/:uniqueString', verifyEmail)
-app.get('/verifyreset/:userId/:resetString', verifyResetLink)
+
 
 
 
