@@ -13,8 +13,6 @@ const UpdateAccountDetails = () => {
     const [bankBankName, setBankBankName] = useState('')
     const [bankAccountName, setBankAccountName] = useState('')
 
-
-
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -25,13 +23,18 @@ const UpdateAccountDetails = () => {
    
 
     useEffect(() => {
-
-        setBankAccountNumber(userInfo.data.bankAccountNumber)
-        setBankBankName(userInfo.data.bankBankName)
-        setBankAccountName(userInfo.data.bankAccountName)
+        setBankAccountNumber(userInfo.data.bankAccountNumber || '');
+        setBankBankName(userInfo.data.bankBankName || '');
+        setBankAccountName(userInfo.data.bankAccountName || '');
 
 
     }, [userInfo.setFirstName, userInfo.setLastName])
+
+    useEffect(() => {
+        if (userInfo.data.isBankChanged) {
+            navigate('/home/me')
+        }
+    }, [navigate, userInfo])
 
     const submitHandler = async (e) => {
         e.preventDefault()

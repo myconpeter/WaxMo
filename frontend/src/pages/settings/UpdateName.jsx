@@ -12,6 +12,8 @@ import { setCredentials } from '../../slices/authSlice'
 
 const UpdateName = () => {
 
+
+    
     const [see, setSee] = useState(false)
 
     const toggle = (i) => {
@@ -43,6 +45,13 @@ const UpdateName = () => {
 
 
     }, [userInfo.setFirstName, userInfo.setLastName])
+
+    useEffect(() => {
+        if (userInfo.data.accountNameUpdated) {
+            navigate('/home/me')
+
+        }
+    }, [navigate, userInfo])
 
     const submitHandler = async (e) => {
         e.preventDefault()

@@ -28,9 +28,7 @@ const RecoverEmail = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(email)
-
-        const res = await resetEmail({ email })
+             const res = await resetEmail({ email })
 
 
         if (res.error) {

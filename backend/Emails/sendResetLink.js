@@ -2,7 +2,7 @@ import transporter from './transporter.js'
 import ResetSchema from '../models/resetSchema.js'
 import { v4 as uuidv4 } from 'uuid'
 
-const sendResetLink = async ({ _id, email, firstName, lastName }, res) => {
+const sendResetLink = async ({ _id, email, firstName }, res) => {
     const currentUrl = process.env.NODE_ENV === 'production' ? 'https://waxmo.onrender.com' : 'http://localhost:5000';
     console.log(currentUrl)
     const resetString = uuidv4() + _id
@@ -21,41 +21,162 @@ const sendResetLink = async ({ _id, email, firstName, lastName }, res) => {
         to: email,
         subject: `Reset Password`,
         html: `
-            <html>
-                <head>
-                    <style>
-                        .container {
-                            max-width: 600px;
-                            margin: 0 auto;
-                            padding: 20px;
-                            font-family: Arial, sans-serif;
-                            border: 1px solid #ccc;
-                            border-radius: 10px;
-                        }
-                        .logo {
-                            display: block;
-                            margin: 0 auto;
-                            width: 200px;
-                        }
-                        .button {
-                            display: inline-block;
-                            padding: 10px 20px;
-                            background-color: #007bff;
-                            color: #fff;
-                            text-decoration: none;
-                            border-radius: 5px;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <img src="https://th.bing.com/th?id=ORMS.74c6b9abdf846c014d655f55151c47bb&pid=Wdp&w=300&h=156&qlt=90&c=1&rs=1&dpr=1&p=0" alt="Company Logo" class="logo">
-                        <h2>Reset Password!</h2>
-                        <p>Please click this link to reset your password.</p>
-                        <a href="${activateLink}" class="button">Reset password</a>
-                    </div>
-                </body>
-            </html>
+             
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password Email</title>
+    <style>
+        /* Inline CSS styles */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            
+        }
+
+        .logo {
+            margin: auto;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            background-color: black;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .button {
+            padding: 10px 12px;
+            background-color: #044a0e;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+            width: 130px;
+        }
+
+        .emailver {
+            color: white;
+            margin-top: 10px;
+            background-color: #044a0e;
+            display: inline-flex;
+            font-weight: bold;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding: 0 10px;
+        }
+        .hi{
+           
+            flex-direction: column;
+             justify-content: center;
+               
+              align-items: center;
+        }
+
+        .clickToReset{
+            
+            font-weight: 510;
+        }
+
+        
+
+        .the{
+            margin-top: 10px;
+        }
+        .waxmo{
+            text-align: center;
+             margin: 0;
+              color: #044a0e;
+        }
+        .growth{
+            background-color: #044a0e;
+             color: white; 
+             text-align: center; 
+             padding: 5px 0;
+        }
+        .imgdiv{
+            display: flex; 
+            justify-content: center;
+            align-items:center;
+             margin: 10px;
+        }
+        .eachimg{
+            width: 15px;
+             height: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <a href="https://ibb.co/pXs6vJH"><img src="https://i.ibb.co/WKdNWgr/waxmo.jpg" style="height: 50px; width: 50px;" alt="waxmo" border="0"></a>   
+                </div>
+
+        <div class="emailver">
+            <p style="text-align: center;">Reset Password</p>
+        </div>
+
+        <div class="hi">
+            <div>
+                <h4>Hi, ${firstName},</h4>
+                <p class="clickToReset">Click this link reset your password</p>
+            </div>
+
+            <a style="margin-right: 100px; text-decoration: none;" href="${activateLink}">
+                <div class="button">
+                    Reset Password
+                </div>
+            </a>
+
+            <div>
+                <p class="questions">Got some questions or need help?</p>
+                <p  class="questions">Kindly reply this message to reach our support team</p>
+                <p  class="questions">Please ignore if you did not reset your password</p>
+            </div>
+        </div>
+
+
+        <div class="">
+            <p>Subscribe to our channels
+
+            <a  href="https://www.facebook.com/ThetallestboYOfficial"><img src="https://i.ibb.co/Bf5ZD4g/face.png" alt="face" border="0" style="text-decoration: none; width: 20px; height: 20px;" target="_blank"></a>
+
+            <a  href="https://chat.whatsapp.com/B966BJQfiSGDUbHNLbAPyx"><img  class="eachimg" src="https://i.ibb.co/LYd47Vt/what.jpg" alt="face" border="0" style="text-decoration: none;" target="_blank"></a>
+
+            <a  href="https://x.com/waxmo_/"><img  class="eachimg" src="https://i.ibb.co/RbT8KvM/x.jpg" alt="face" border="0" style="text-decoration: none;" target="_blank"></a>
+
+
+            </p>
+        </div>
+
+        <div class="the">
+            <h3 class="waxmo">WAXMO</h3>
+            <div class="growth">The path to financial growth</div>
+        </div>
+
+       
+
+        <footer style="background-color: gray; text-align: center; padding: 20px;">
+            Copyright &copy;
+            <script>
+                document.write(new Date().getFullYear());
+            </script> WaxMo Technologies
+
+            <p>WaxMo is a financial technology investment company</p>
+            <p>that diversify it investment in different portfolio. It issues</p>
+            <p>shares to investors in return for dividend</p>
+        </footer>
+    </div>
+</body>
+
+</html>
+        
         `
     }
 

@@ -91,7 +91,7 @@ const router = createBrowserRouter(
           <Route path="updatemobileno" element={<UpdateMobileNO />} />
           <Route path="updateaccountdetails" element={<UpdateAccountDetails />} />
           <Route path="myAccount" element={<MyAccount />} />
-          <Route path="error" element={<ErrorPopUp />} />
+
 
         </Route>
 

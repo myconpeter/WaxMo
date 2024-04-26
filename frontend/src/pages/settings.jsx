@@ -1,66 +1,74 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Menu from '../components/menu'
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { Link } from 'react-router-dom';
 
 
-
-
-// const toggle = (i) => {
-
-
-//     if (selected === false) {
-//         return setSelected(null)
-
-//     }
-
-//     setSelected(i)
-// }
-
-
+import Modal from "../components/ErrorPopUp"
+import { FcCancel } from "react-icons/fc";
 
 
 
 const settings = () => {
-    // const [selected, setSelected] = useState(false)
-
-
-
-    // const toggle = (i) => {
-    //     console.log(i)
-
-    //     if (i === false) {
-    //         console.log('yes')
-    //         setSelected(true)
-    //         i = true
-    //         console.log(i)
-    //     } else {
-    //         setSelected(false)
-    //     }
-
-
-
+    const [open, setOpen] = useState(false)
+    const { userInfo } = useSelector((state) => state.auth)
 
     return (
         <div className='bg-white w-full h-screen p-2 pt-12'>
             <Menu PageName='Settings' />
 
             <div className=''>
-                <Link to='/home/updatename' >
 
-                    <div className=' flex items-center justify-between h-8 w-full bg-darkGray rounded-md p-3 '>
-                        <p className='text-overLay font-semibold text-sm'>Update Name</p>
+                {userInfo.data.accountNameUpdated ? (<>
+                    <Link  onClick={() => setOpen(true)} >
+<div className=' flex items-center justify-between h-8 w-full bg-darkGray rounded-md p-3 '>
+    <p className='text-overLay font-semibold text-sm'>Update Name</p>
 
-                        <IoIosArrowDroprightCircle className='text-overLay' />
+    <IoIosArrowDroprightCircle className='text-overLay' />
 
+</div>
+</Link>
 
-                    </div>
-                </Link>
+<main className="App">
+     
 
-                {/* <div className='h-36 mt-2  bg-darkGray rounded-3xl'>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <div className="text-center w-56">
+          <FcCancel  size={56} className="mx-auto text-danger" />
+          <div className="mx-auto my-4 w-48">
+            <h3 className="text-lg font-black text-darkGray">   Account Name has already been updated </h3>
+            <Link to="/home/contact"  className="text-sm text-overLay mt-6">
+              Contact Admin
+            </Link>
+          </div>
+          <div className="flex gap-4">
+          
+            <button
+              className="btn btn-light w-full"
+              onClick={() => setOpen(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </Modal>
+    </main>
+                </>):(<>
+                    <Link to='/home/updatename' >
 
-                </div> */}
+<div className=' flex items-center justify-between h-8 w-full bg-darkGray rounded-md p-3 '>
+    <p className='text-overLay font-semibold text-sm'>Update Name</p>
+
+    <IoIosArrowDroprightCircle className='text-overLay' />
+
+</div>
+</Link>
+
+                </>)}
+               
+               
                 <Link to='/home/updatepassword' className=' flex items-center justify-between  h-8 w-full bg-darkGray mt-1 rounded-md p-3 '>
                     <p className='text-overLay font-semibold text-sm '>Update Password</p>
 

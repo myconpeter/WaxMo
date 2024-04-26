@@ -1,14 +1,19 @@
-<html>
+ 
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password Email</title>
     <style>
+        /* Inline CSS styles */
         .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 0;
             font-family: Arial, sans-serif;
-            border: 1px solid black;
-            border-radius: 10px;
+            
         }
 
         .logo {
@@ -24,23 +29,17 @@
         }
 
         .button {
-
             padding: 10px 12px;
             background-color: #044a0e;
-
-            border-radius: 15px;
+            border-radius: 5px;
             text-align: center;
             color: white;
-
             width: 130px;
-
         }
 
         .emailver {
             color: white;
             margin-top: 10px;
-
-
             background-color: #044a0e;
             display: inline-flex;
             font-weight: bold;
@@ -48,58 +47,107 @@
             border-bottom-right-radius: 10px;
             padding: 0 10px;
         }
+        .hi{
+           
+            flex-direction: column;
+             justify-content: center;
+               
+              align-items: center;
+        }
+
+        .clickToReset{
+            
+            font-weight: 510;
+        }
+
+        
+
+        .the{
+            margin-top: 10px;
+        }
+        .waxmo{
+            text-align: center;
+             margin: 0;
+              color: #044a0e;
+        }
+        .growth{
+            background-color: #044a0e;
+             color: white; 
+             text-align: center; 
+             padding: 5px 0;
+        }
+        .imgdiv{
+            display: flex; 
+            justify-content: center;
+            align-items:center;
+             margin: 10px;
+        }
+        .eachimg{
+            width: 15px;
+             height: 15px;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <div class="logo">
-            <img src="https://waxmo.onrender.com/assets/logo/-D17YjO0y.svg" alt="Company Logo" class="logo">
-        </div>
+            <a href="https://ibb.co/pXs6vJH"><img src="https://i.ibb.co/WKdNWgr/waxmo.jpg" style="height: 50px; width: 50px;" alt="waxmo" border="0"></a>   
+                </div>
 
         <div class="emailver">
-            <p>Reset Password</p>
+            <p style="text-align: center;">Reset Password</p>
         </div>
-        <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
+
+        <div class="hi">
             <div>
-                <h4>
-                    Hi, Micheal Peter,
-                </h4>
-                <p style="text-align: center; font-weight: 510;">Click this link reset your password </p>
+                <h4>Hi, ${firstName},</h4>
+                <p class="clickToReset">Click this link reset your password</p>
             </div>
 
-            <div class="button">
-                Reset Password
-            </div>
+            <a style="margin-right: 100px; text-decoration: none;" href="${activateLink}">
+                <div class="button">
+                    Verify Account
+                </div>
+            </a>
 
             <div>
-                <p style="text-align: center;">Got some questions or need help?</p>
-                <p style="text-align: center;">Kindly reply this message to reach our support team</p>
-
-                <p style="text-align: center;">Please ignore if you did not reset your password</p>
-
+                <p class="questions">Got some questions or need help?</p>
+                <p  class="questions">Kindly reply this message to reach our support team</p>
+                <p  class="questions">Please ignore if you did not reset your password</p>
             </div>
         </div>
 
-        <div style="margin-top: 10px;">
-            <h3 style="text-align: center; margin: 0; color: #044a0e;">WAXMO</h3>
-            <div style="background-color: #044a0e; color: white; text-align: center; padding: 5px 0;">The path to
-                financial growth</div>
+
+        <div class="">
+            <p>Subscribe to our channels
+
+            <a  href="https://www.facebook.com/ThetallestboYOfficial"><img src="https://i.ibb.co/Bf5ZD4g/face.png" alt="face" border="0" style="text-decoration: none; width: 20px; height: 20px;" target="_blank"></a>
+
+            <a  href="https://chat.whatsapp.com/B966BJQfiSGDUbHNLbAPyx"><img  class="eachimg" src="https://i.ibb.co/LYd47Vt/what.jpg" alt="face" border="0" style="text-decoration: none;" target="_blank"></a>
+
+            <a  href="https://x.com/waxmo_/"><img  class="eachimg" src="https://i.ibb.co/RbT8KvM/x.jpg" alt="face" border="0" style="text-decoration: none;" target="_blank"></a>
+
+
+            </p>
         </div>
 
-        <div style="display: flex; justify-content: center; margin: 10px 0;">
-            <img src="facebook" alt="facebook">
-            <img src="whatspp" alt="whatsapp">
+        <div class="the">
+            <h3 class="waxmo">WAXMO</h3>
+            <div class="growth">The path to financial growth</div>
         </div>
+
+       
 
         <footer style="background-color: gray; text-align: center; padding: 20px;">
             Copyright &copy;
-            <script>document.write(new Date().getFullYear());</script> WaxMo Technologies
+            <script>
+                document.write(new Date().getFullYear());
+            </script> WaxMo Technologies
 
             <p>WaxMo is a financial technology investment company</p>
-            <p>that diversify it inverstment in different portfoilo. It issues</p>
-            <p>shares to investors in return for dividen</p>
-
+            <p>that diversify it investment in different portfolio. It issues</p>
+            <p>shares to investors in return for dividend</p>
         </footer>
     </div>
 </body>
