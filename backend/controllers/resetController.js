@@ -12,7 +12,7 @@ const handleEmail = asyncHandler(async (req, res) => {
         res.status(401)
         throw new Error('Email Address not found')
     }
-    if (!searchUser.verified === true) {
+    if (!searchUser.verified) {
         res.status(401)
         throw new Error('This Account as not been verified')
     }
@@ -22,7 +22,7 @@ const handleEmail = asyncHandler(async (req, res) => {
 
 const verifyResetLink = asyncHandler(async (req, res) => {
     const { userId, resetString } = req.params
-    const redirectLink = `http://localhost:3000/changepassword/${userId}/${resetString}`
+    const redirectLink = `https://waxmo.onrender.com/changepassword/${userId}/${resetString}`
 
     const foundResetString = await ResetSchema.findOne({ userId })
     if (!foundResetString) {

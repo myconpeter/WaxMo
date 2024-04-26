@@ -25,9 +25,6 @@ import { verifyResetLink } from './controllers/resetController.js'
 //     res.send('okkkk')
 // })
 
-app.get('/verify/:userId/:uniqueString', verifyEmail)
-app.get('/verifyreset/:userId/:resetString', verifyResetLink)
-
 if (process.env.NODE_ENV === "production") {
     const __dirname = path.resolve()
     app.use(express.static(path.join(__dirname, 'frontend/dist')))
@@ -40,12 +37,19 @@ if (process.env.NODE_ENV === "production") {
 }
 
 
+app.get('/verify/:userId/:uniqueString', verifyEmail)
+app.get('/verifyreset/:userId/:resetString', verifyResetLink)
+
+
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use('/api/users', userRoutes)
 app.use(errorHandler)
 app.use(notFount)
+
+
 
 
 // DATABASE CONNECTION

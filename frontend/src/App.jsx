@@ -48,6 +48,9 @@ import ResetConfirmed from "./components/ResetConfirmed";
 import PrivateRoute from "./components/PrivateRoute";
 import RecoverEmail from "./pages/RecoveryEmail";
 import VerificationConfirmed from "./components/VerificationConfirmed";
+import MyAccount from "./pages/MyAccount";
+import MakePayment from "./pages/MakePayment";
+import ErrorPopUp from "./components/ErrorPopUp";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -78,6 +81,7 @@ const router = createBrowserRouter(
           <Route path="analysis" element={<Analysis />} />
           <Route path="shareinfo" element={<ShareInfo />} />
           <Route path="buyshare" element={<BuyShare />} />
+          <Route path="makePayment" element={<MakePayment />} />
           <Route path="infomation" element={<Information />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
@@ -86,6 +90,9 @@ const router = createBrowserRouter(
           <Route path="updatepassword" element={<UpdatePassword />} />
           <Route path="updatemobileno" element={<UpdateMobileNO />} />
           <Route path="updateaccountdetails" element={<UpdateAccountDetails />} />
+          <Route path="myAccount" element={<MyAccount />} />
+          <Route path="error" element={<ErrorPopUp />} />
+
         </Route>
 
         <Route path="admin" element={<HomeLayout />}>

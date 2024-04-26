@@ -36,11 +36,11 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const verifyEmail = asyncHandler(async (req, res) => {
     const { userId, uniqueString } = req.params
-    const verifiedLink = `http://localhost:3000/emailverified/:${userId}/:${uniqueString}`
+    const verifiedLink = `https://waxmo.onrender.com/emailverified/:${userId}/:${uniqueString}`
     let message = ''
     const userVerification = await UserVerification.findOne({ userId })
     if (!userVerification) {
-        message = 'Verification link not found'
+        message = 'Verification link  not found'
         return res.redirect(`${verifiedLink}?error=true&message=${message}`)
     }
     const expiresAt = userVerification.expiresAt

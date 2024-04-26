@@ -5,7 +5,8 @@ import { MdDashboard } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
-
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const homeLayout = () => {
     return (
@@ -78,7 +79,7 @@ const homeLayout = () => {
             </nav >
 
 
-
+            <ToastContainer />
             <Outlet />
 
 

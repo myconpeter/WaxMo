@@ -26,13 +26,9 @@ const userSchema = mongoose.Schema({
     },
 
     password: {
-        type: String,
-        required: true
+        type: String
     },
-    confirmPassword: {
-        type: String,
 
-    },
     isAdmin: {
         type: Boolean,
         default: false
@@ -46,6 +42,24 @@ const userSchema = mongoose.Schema({
         default: 0
     },
 
+    accountNameUpdated: {
+        type: Boolean,
+        default: false
+    },
+    bankAccountName: {
+        type: String,
+    },
+    bankAccountNumber: {
+        type: String,
+    },
+    bankBankName: {
+        type: String
+    },
+    isBankChanged: {
+        type: Boolean,
+        default: false
+    },
+
 
     verified: Boolean
 
@@ -54,7 +68,7 @@ const userSchema = mongoose.Schema({
 
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
-        next
+        next()
     }
     const salt = await bcrypt.genSalt(12)
     this.password = await bcrypt.hash(this.password, salt)

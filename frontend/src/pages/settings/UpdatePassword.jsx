@@ -1,76 +1,132 @@
-
 import Menu from '../../components/menu';
-import { FaUser } from "react-icons/fa6";
-import { FaCheck } from "react-icons/fa";
-import { IoMdEye } from "react-icons/io";
-import { IoMdEyeOff } from "react-icons/io";
-import { FaRegCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { setCredentials } from '../../slices/authSlice';
+import { useUpdatePasswordMutation } from '../../slices/userApiSlice';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 const UpdatePassword = () => {
+    const [see, setSee] = useState(false);
+    const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
+    const { userInfo } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const [see, setSee] = useState(false)
+    const validationSchema = Yup.object().shape({
+        oldPassword: Yup.string().required('Old Password is required'),
+        newPassword: Yup.string()
+            .required('New Password is required')
+            .min(8, 'Password must be at least 8 characters')
+            .matches(
+                /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/,
+                'Password must contain at least one uppercase letter, one lowercase letter, and one number'
+            ),
+        confirmNewPassword: Yup.string()
+            .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
+            .required('Confirm New Password is required')
+    });
 
-    const toggle = (i) => {
-        i.preventDefault();
-        if (see === false) {
-            setSee(true)
+    const onSubmit = async (values, { setSubmitting }) => {
+        const { oldPassword, newPassword, confirmNewPassword } = values;
+
+        try {
+            const res = await updatePassword({
+                _id: userInfo._id,
+                oldPassword,
+                newPassword,
+                confirmNewPassword
+            });
+
+            if (res.error) {
+                toast.error(res.error.data.message);
+            } else {
+                dispatch(setCredentials({ ...res }));
+                navigate('/home/homepage');
+                toast.success(`Password Updated Successfully`);
+            }
+        } catch (error) {
+            console.error('Error updating password:', error);
+            toast.error('An error occurred while updating the password');
+        } finally {
+            setSubmitting(false);
         }
-        else {
-            setSee(false)
+    };
 
-        }
-    }
     return (
         <div>
             <Menu PageName='Update Password' />
 
-            <form action="/" className="pt-12 p-10 flex flex-col items-center justify-center">
-                <div className="flex flex-col items-start justify-center text-lg mb-6">
+            <Formik
+                initialValues={{ oldPassword: '', newPassword: '', confirmNewPassword: '' }}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}
+            >
+                {({ isSubmitting }) => (
+                    <Form className="pt-12 p-10 flex flex-col items-center justify-center">
+                        <div className="flex flex-col items-start justify-center text-lg mb-6">
+                            <label htmlFor="oldPassword" className="text-overLay text-sm font-semibold">Old Password</label>
+                            <div className="flex border-b-2 border-overLay">
+                                <Field
+                                    type={see ? "text" : "password"}
+                                    id="oldPassword"
+                                    name="oldPassword"
+                                    className="bg-lightGray border-overLay py-2 w-full focus:outline-none"
+                                />
+                                <button onClick={() => setSee(prev => !prev)}>
+                                    {see ? <IoMdEye className="text-overLay" /> : <IoMdEyeOff className="text-overLay" />}
+                                </button>
+                            </div>
+                            <ErrorMessage name="oldPassword" component="div" className="text-danger text-xs" />
+                        </div>
 
-                    <p className="text-overLay text-sm font-semibold">Old Password</p>
+                        <div className="flex flex-col items-start justify-center text-lg mb-6">
+                            <label htmlFor="newPassword" className="text-overLay text-sm font-semibold">New Password</label>
+                            <div className="flex border-b-2 border-overLay">
+                                <Field
+                                    type={see ? "text" : "password"}
+                                    id="newPassword"
+                                    name="newPassword"
+                                    className="bg-lightGray border-overLay py-2 w-full focus:outline-none"
+                                />
+                                <button onClick={() => setSee(prev => !prev)}>
+                                    {see ? <IoMdEye className="text-overLay" /> : <IoMdEyeOff className="text-overLay" />}
+                                </button>
+                            </div>
+                            <ErrorMessage name="newPassword" component="div" className="text-danger text-xs" />
+                        </div>
 
-                    <div className="flex border-b-2 border-overLay">
+                        <div className="flex flex-col items-start justify-center text-lg mb-6">
+                            <label htmlFor="confirmNewPassword" className="text-overLay text-sm font-semibold">Confirm New Password</label>
+                            <div className="flex border-b-2 border-overLay">
+                                <Field
+                                    type={see ? "text" : "password"}
+                                    id="confirmNewPassword"
+                                    name="confirmNewPassword"
+                                    className="bg-lightGray border-overLay py-2 w-full focus:outline-none"
+                                />
+                                <button onClick={() => setSee(prev => !prev)}>
+                                    {see ? <IoMdEye className="text-overLay" /> : <IoMdEyeOff className="text-overLay" />}
+                                </button>
+                            </div>
+                            <ErrorMessage name="confirmNewPassword" component="div" className="text-danger text-xs" />
+                        </div>
 
-                        <input type={see === true ? "text" : "password"} id="oldpassword" className="bg-lightGray border-overLay py-2 w-full  focus:outline-none" />
-                        <button onClick={toggle}>{see === true ? <IoMdEye className="text-overLay" /> : <IoMdEyeOff className="text-overLay" />}</button>
-
-                    </div>
-
-                </div>
-                <div className="flex flex-col items-start justify-center text-lg mb-6">
-
-                    <p className="text-overLay text-sm font-semibold">New Password</p>
-
-                    <div className="flex border-b-2 border-overLay">
-
-                        <input type={see === true ? "text" : "password"} id="newpassword" className="bg-lightGray border-overLay  py-2 md:py-4  w-full  focus:outline-none" />
-                        <button onClick={toggle}>{see === true ? <IoMdEye className="text-overLay" /> : <IoMdEyeOff className="text-overLay" />}</button>
-
-                    </div>
-
-                </div>
-                <div className="flex flex-col items-start justify-center text-lg mb-6">
-
-                    <p className="text-overLay text-sm font-semibold">Confirm New Password</p>
-
-                    <div className="flex border-b-2 border-overLay">
-
-                        <input type={see === true ? "text" : "password"} id="confirmpassword" className="bg-lightGray border-overLay  py-2 md:py-4  w-full  focus:outline-none" />
-                        <button onClick={toggle}>{see === true ? <IoMdEye className="text-overLay" /> : <IoMdEyeOff className="text-overLay" />}</button>
-
-                    </div>
-
-                </div>
-
-
-
-
-                <button className="bg-overLay font-medium p-2 md:p-4 text-white uppercase w-full rounded-full">Update Password</button>
-            </form>
+                        <button
+                            type="submit"
+                            className="bg-overLay font-medium p-2 md:p-4 text-white w-full rounded-full"
+                            disabled={isSubmitting}
+                        >
+                            {isLoading ? 'Please wait...' : 'Change Password'}
+                        </button>
+                    </Form>
+                )}
+            </Formik>
         </div>
-    )
+    );
 }
 
-export default UpdatePassword
+export default UpdatePassword;

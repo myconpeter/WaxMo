@@ -42,6 +42,39 @@ export const userApiSlice = apiSlice.injectEndpoints({
         }),
 
 
+        updateName: builder.mutation({
+            query: (data) => ({
+                url: `${USERS_URL}/updateName`,
+                method: 'PUT',
+                body: data
+            })
+        }),
+
+        updatePassword: builder.mutation({
+            query: (data) => ({
+                url: `${USERS_URL}/updatePassword`,
+                method: 'PUT',
+                body: data
+            })
+        }),
+
+        updateMobile: builder.mutation({
+            query: (data) => ({
+                url: `${USERS_URL}/updateMobile`,
+                method: 'PUT',
+                body: data
+            })
+        }),
+
+        updateBank: builder.mutation({
+            query: (data) => ({
+                url: `${USERS_URL}/updateBank`,
+                method: 'PUT',
+                body: data
+            })
+        }),
+
+
 
     })
 })
@@ -52,7 +85,11 @@ export const {
     useLogoutMutation,
     useRegisterMutation,
     useResetEmailMutation,
-    useChangePasswordMutation
+    useChangePasswordMutation,
+    useUpdateNameMutation,
+    useUpdatePasswordMutation,
+    useUpdateMobileMutation,
+    useUpdateBankMutation
 
 }
     = userApiSlice 
