@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import { toast } from 'react-toastify'
+import Spinner from "../loaders/Spinner";
 
 const RecoverEmail = () => {
     const [email, setEmail] = useState('')
@@ -83,7 +84,7 @@ const RecoverEmail = () => {
                                 </div>
                             </div>
 
-                            <button type="submit" className="bg-overLay font-medium p-2  text-white w-full rounded-full">{isLoading ? 'Please wait...' : 'Next'}</button>
+                            <button type="submit" className="bg-overLay font-medium p-2  text-white w-full rounded-full">{isLoading ?<Spinner/> : 'Recover My Account'}</button>
                         </form>
 
 

@@ -10,6 +10,18 @@ import { useLogoutMutation } from '../slices/userApiSlice';
 import { logout } from '../slices/authSlice'
 
 
+// menu icons
+import { FaHome } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
+import { IoMdInformationCircle } from "react-icons/io";
+import { IoSettingsSharp } from "react-icons/io5";
+import { FaQuestionCircle } from "react-icons/fa";
+import { CgMoreO } from "react-icons/cg";
+import { BiSolidContact } from "react-icons/bi";
+import { IoExit } from "react-icons/io5";
+import { MdAdminPanelSettings } from "react-icons/md";
+
+
 
 
 
@@ -29,40 +41,46 @@ const Menu = (props) => {
         {
             id: 1,
             link: "Home",
-            ref: "/home/homepage"
+            ref: "/home/homepage",
+            tabIcon: <FaHome />
         },
         {
             id: 2,
             link: "Dashboard",
-            ref: "/home/dashboard"
+            ref: "/home/dashboard",
+            tabIcon: <MdDashboard />
         },
 
         {
             id: 3,
             link: "Information",
-            ref: "/home/infomation"
+            ref: "/home/infomation",
+            tabIcon: <IoMdInformationCircle />
         },
         {
             id: 4,
             link: "Settings",
-            ref: "/home/settings"
-
+            ref: "/home/settings",
+            tabIcon: <IoSettingsSharp />
         },
         {
             id: 5,
             link: "FAQ",
-            ref: "/home/faq"
+            ref: "/home/faq",
+            tabIcon: <FaQuestionCircle />
         },
 
         {
             id: 6,
             link: "About Us",
-            ref: "/home/about"
+            ref: "/home/about",
+            tabIcon: <CgMoreO />
         },
         {
             id: 7,
             link: "Contact Us",
-            ref: "/home/contact"
+            ref: "/home/contact",
+            tabIcon: <BiSolidContact />
         }
 
 
@@ -110,26 +128,26 @@ const Menu = (props) => {
             {nav && (
                 <div className='flex  absolute top-0 left-0 text-white h-36 w-full  '>
 
-                    <div onClick={() => setNav(!nav)} className='w-1/3   h-screen '></div>
-                    <ul className=' flex  flex-col  w-2/3 bg-white text-black h-screen items-center'>
-                        {links.map(({ id, link, ref }) => (
+                    <div onClick={() => setNav(!nav)} className='w-2/3   h-screen '></div>
+                    <ul className=' flex  flex-col  w-1/3 bg-white text-black h-screen items-start mt-5'>
+                        {links.map(({ id, link, ref, tabIcon }) => (
                             <li key={id} className='text-sm capitalize text-overLay py-4 px-4'>
 
-                                <Link to={ref} > {link}</Link>
+                                <Link className='flex items-center ' to={ref} > <span className='mx-1'>{tabIcon}</span> {link}</Link>
 
 
                             </li>
                         ))}
                         <li className='text-sm text-danger py-4 px-4'>
 
-                            <div onClick={logoutHandler} > Logout </div>
+                            <div className='flex items-center ' onClick={logoutHandler} > <span className='mx-1'><IoExit /></span> Logout </div>
 
 
                         </li>
                         {userInfo.data.isAdmin ? (<>
                             <li className='text-sm text-overLay py-4 px-4'>
 
-                                <Link to='/admin' > Admin Panel</Link>
+                                <Link className='flex items-center ' to='/admin' >  <span className='mx-1'><MdAdminPanelSettings /></span> Admin Panel</Link>
 
 
                             </li>

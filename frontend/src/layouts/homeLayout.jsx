@@ -34,10 +34,9 @@ const homeLayout = () => {
                             <div className=" flex flex-col flex-1 items-center justify-center  " >
                                 <NavLink to="/home/notifications" className={({ isActive }) =>
                                     isActive ? " p-2 text-black flex flex-col items-center" : "p-2 text-overLay flex flex-col items-center"}>
-                                    {/* <span class=" flex h-2 w-2 justify-end">
-
-                                        <span class="relative inline-flex rounded-full  w-3 bg-danger"></span>
-                                    </span> */}
+                                 {/* 
+                                 reminder for notification change color to red
+                                 */}
                                     <FaBell />
 
                                     <p className="text-black text-xs">Notification</p>

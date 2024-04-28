@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import { useState } from "react";
 import Menu from '../components/menu';
 import { useNavigate } from "react-router-dom";
+import Spinner from '../loaders/Spinner';
 
 const BuyShare = () => {
     const navigate = useNavigate();
@@ -31,14 +32,14 @@ const BuyShare = () => {
                     <Form className="mt-7 p-2 w-screen h-screen" >
                         <div className="flex flex-col justify-center items-center h-1/2">
                             <div>
-                                <p className="text-3xl text-overLay font-semibold">Input Share Amount</p>
+                                <p className="text-2xl text-overLay font-semibold">Input Share Amount</p>
                             </div>
                             <div className="mt-8 flex justify-center items-center">
                             <Field name="amount">
   {({ field, form }) => (
     <input
       {...field}
-      className="h-16 text-3xl border-b-2 text-center w-1/2 focus:outline-none"
+      className="h-8 text-3xl border-b-2 text-center w-1/2 focus:outline-none"
       type="text"
       id="amount"
       placeholder="₦0.00"
@@ -54,7 +55,7 @@ const BuyShare = () => {
 
                             </div>
                             <ErrorMessage name="amount" component="div" className="text-danger" />
-                            <p className='text-xl text-overLay'>= {values.amount ? (values.amount / 10000).toFixed(2) : '0.00'}%</p>
+                            <p className='text-xl text-overLay'>= {values.amount ? (values.amount / 1000000).toFixed(2) : '0.00'}%</p>
                         </div>
 
                         <div className="flex flex-col mx-3">
@@ -64,7 +65,7 @@ const BuyShare = () => {
                     </div>
 
                     <div className="flex justify-between mt-8 border-b-2 border-darkGray ">
-                        <p className="text-xl"> Share Percent:</p>
+                        <p className="text-xl">Max Share Percent:</p>
                         <p className="text-xl">1%</p>
                     </div>
                 </div>
@@ -73,9 +74,9 @@ const BuyShare = () => {
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="rounded-lg px-12 font-semibold py-3 bg-overLay text-3xl text-white"
+                                className="rounded-lg px-4 font-semibold py-2 bg-overLay text-xl text-white"
                             >
-                                {isSubmitting ? 'Please wait...' : 'Buy'}
+                                {isSubmitting ?<Spinner/> : 'Buy'}
                             </button>
                         </div>
                     </Form>

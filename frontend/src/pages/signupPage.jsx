@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Spinner from "../loaders/Spinner";
 const SignupPage = () => {
     const navigate = useNavigate();
     const [register, { isLoading }] = useRegisterMutation();
@@ -156,7 +156,7 @@ const SignupPage = () => {
                                         <ErrorMessage name="termsAndConditions" component="div" className="text-danger text-xs" />
                                     </div>
 
-                                    <button type="submit" className="bg-overLay font-medium p-2 text-white uppercase w-full rounded-full" disabled={isSubmitting}>{isSubmitting ? 'Signing Up...' : 'Sign Up'}</button>
+                                    <button type="submit" className="bg-overLay font-medium p-2 text-white w-full rounded-full" disabled={isSubmitting}>{isSubmitting ? <Spinner /> : 'Sign Up'}</button>
 
                                     <div className="flex flex-col px-4 mt-4 items-end space-y-1">
                                         <p className="text-sm">Already have an account ? </p>

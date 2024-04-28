@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { setCredentials } from '../../slices/authSlice'
 import { useUpdateMobileMutation } from '../../slices/userApiSlice';
+import Spinner from '../../loaders/Spinner'
 
 const UpdateMobileNO = () => {
 
@@ -104,7 +105,7 @@ const UpdateMobileNO = () => {
                         <button onClick={toggle}>{see === true ? <IoMdEye className="text-overLay" /> : <IoMdEyeOff className="text-overLay" />}</button>
                     </div>
                 </div>
-                <button type='submit' className="bg-overLay font-medium p-2 md:p-4 text-white w-full rounded-full">{isLoading ? 'Please wait...' : 'Update Mobile Number'}</button>
+                <button type='submit' className="bg-overLay font-medium p-2 md:p-4 text-white w-full rounded-full">{isLoading ? <Spinner/> : 'Update Mobile Number'}</button>
             </form>
         </div>
     )

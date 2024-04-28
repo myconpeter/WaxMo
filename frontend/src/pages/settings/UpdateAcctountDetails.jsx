@@ -6,6 +6,7 @@ import { useUpdateBankMutation } from '../../slices/userApiSlice';
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { setCredentials } from '../../slices/authSlice'
+import Spinner from '../../loaders/Spinner'
 
 const UpdateAccountDetails = () => {
 
@@ -98,7 +99,7 @@ const UpdateAccountDetails = () => {
                 </div>
 
 
-                <button type='submit' className="bg-overLay font-medium p-2 md:p-4 text-white w-full rounded-full">{isLoading ? 'Please wait...' : 'Update Bank Details'}</button>
+                <button type='submit' className="bg-overLay font-medium p-2 md:p-4 text-white w-full rounded-full">{isLoading ?<Spinner/> : 'Update Bank Details'}</button>
             </form>
         </div>
     )

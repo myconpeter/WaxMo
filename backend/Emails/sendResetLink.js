@@ -130,7 +130,7 @@ const sendResetLink = async ({ _id, email, firstName }, res) => {
 
             <a style="margin-right: 100px; text-decoration: none;" href="${activateLink}">
                 <div class="button">
-                    Reset Password
+                    Reset Account Password
                 </div>
             </a>
 
@@ -162,15 +162,13 @@ const sendResetLink = async ({ _id, email, firstName }, res) => {
 
        
 
-        <footer style="background-color: gray; text-align: center; padding: 20px;">
+        <footer style="background-color: gray;r; padding-top: 20px;">
             Copyright &copy;
             <script>
                 document.write(new Date().getFullYear());
-            </script> WaxMo Technologies
+            </script> WaxMo Digitals Services
 
-            <p>WaxMo is a financial technology investment company</p>
-            <p>that diversify it investment in different portfolio. It issues</p>
-            <p>shares to investors in return for dividend</p>
+            <p>WaxMo is a financial technology investment company that diversify it investment in different portfolio. It issues shares to investors in return for dividend</p>
         </footer>
     </div>
 </body>

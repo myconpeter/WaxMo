@@ -123,7 +123,7 @@ const sendVerification = async ({ _id, email, firstName }, res) => {
         
                     <a style="margin-right: 100px; text-decoration: none;" href="${activateLink}">
                         <div class="button">
-                            Verify Account
+                             Email Verification
                         </div>
                     </a>
         
@@ -154,17 +154,14 @@ const sendVerification = async ({ _id, email, firstName }, res) => {
                 </div>
         
                
-        
-                <footer style="background-color: gray; text-align: center; padding: 20px;">
-                    Copyright &copy;
-                    <script>
-                        document.write(new Date().getFullYear());
-                    </script> WaxMo Technologies
-        
-                    <p>WaxMo is a financial technology investment company</p>
-                    <p>that diversify it investment in different portfolio. It issues</p>
-                    <p>shares to investors in return for dividend</p>
-                </footer>
+                <footer style="background-color: gray;r; padding-top: 20px;">
+                Copyright &copy;
+                <script>
+                    document.write(new Date().getFullYear());
+                </script> WaxMo Digitals Services
+    
+                <p>WaxMo is a financial technology investment company that diversify it investment in different portfolio. It issues shares to investors in return for dividend</p>
+            </footer>
             </div>
         </body>
         

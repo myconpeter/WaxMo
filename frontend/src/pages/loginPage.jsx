@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLoginMutation } from '../slices/userApiSlice'
 import { setCredentials } from '../slices/authSlice'
+import Spinner from '../loaders/Spinner'
 
 
 
@@ -126,7 +127,7 @@ const loginPage = () => {
                                 <div className="pb-5 flex  justify-end">
                                     <Link to="/recoveremail" className="text-sm">Forgotten Password ? </Link>
                                 </div>
-                                <button type='submit' to='/home/homepage' className="bg-overLay font-medium p-2 text-white text-center uppercase w-full rounded-full justify-center items-center  md:w-1/3">{isLoading ? 'Please wait ...' : 'Login'}</button>
+                                <button type='submit' to='/home/homepage' className="bg-overLay font-medium p-2 text-white text-center w-full rounded-full justify-center items-center  md:w-1/3">{isLoading ? <Spinner/> : 'Login'}</button>
 
                                 {/* the sign up function */}
                                 <div className="flex flex-col items-end pt-2 mt-5 space-y-1 ">

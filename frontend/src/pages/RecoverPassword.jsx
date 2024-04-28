@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from 'react-toastify'
+import Spinner from "../loaders/Spinner";
 
 
 const RecoverPassword = () => {
@@ -130,9 +131,9 @@ const RecoverPassword = () => {
                                     </div>
                                     <button
                                         type="submit"
-                                        className="bg-overLay font-medium p-2  text-white uppercase w-full rounded-full"
+                                        className="bg-overLay font-medium p-2  text-white w-full rounded-full"
                                     >
-                                        Change Password
+                                       {isLoading ? <Spinner/> : 'Change Password'}
                                     </button>
                                 </Form>
                             )}

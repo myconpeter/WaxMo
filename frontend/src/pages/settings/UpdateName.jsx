@@ -9,6 +9,7 @@ import { useUpdateNameMutation } from '../../slices/userApiSlice';
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { setCredentials } from '../../slices/authSlice'
+import Spinner from '../../loaders/Spinner'
 
 const UpdateName = () => {
 
@@ -123,7 +124,7 @@ const UpdateName = () => {
                 </div>
 
 
-                <button type='submit' className="bg-overLay font-medium p-2 text-sm text-white w-full rounded-full">{isLoading ? 'please wait...' : 'Update Account Name'}</button>
+                <button type='submit' className="bg-overLay font-medium p-2 text-sm text-white w-full rounded-full">{isLoading ? <Spinner/> : 'Update Account Name'}</button>
             </form>
         </div>
     )

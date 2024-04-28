@@ -8,6 +8,7 @@ import { setCredentials } from '../../slices/authSlice';
 import { useUpdatePasswordMutation } from '../../slices/userApiSlice';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import Spinner from '../../loaders/Spinner'
 
 const UpdatePassword = () => {
     const [see, setSee] = useState(false);
@@ -120,7 +121,7 @@ const UpdatePassword = () => {
                             className="bg-overLay font-medium p-2 md:p-4 text-white w-full rounded-full"
                             disabled={isSubmitting}
                         >
-                            {isLoading ? 'Please wait...' : 'Change Password'}
+                            {isLoading ?<Spinner/> : 'Change Password'}
                         </button>
                     </Form>
                 )}
