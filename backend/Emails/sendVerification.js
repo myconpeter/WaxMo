@@ -1,20 +1,22 @@
 import { v4 as uuidv4 } from 'uuid';
-import UserVerification from '../models/userVerification.js'
-import transporter from './transporter.js'
+import UserVerification from '../models/userVerification.js';
+import transporter from './transporter.js';
 
 const sendVerification = async ({ _id, email, firstName }, res) => {
-    const currentUrl = process.env.NODE_ENV === 'production' ? 'https://waxmo.onrender.com' : 'http://localhost:5000';
-    console.log(currentUrl)
-    const uniqueString = uuidv4() + _id
-    const activateLink = `${currentUrl}/verify/${_id}/${uniqueString}`;
+	const currentUrl =
+		process.env.NODE_ENV === 'production'
+			? 'https://waxmo.onrender.com'
+			: 'http://localhost:5000';
+	console.log(currentUrl);
+	const uniqueString = uuidv4() + _id;
+	const activateLink = `${currentUrl}/verify/${_id}/${uniqueString}`;
 
-
-    // MAILOPTIONS
-    const sendMailOptions = {
-        from: process.env.AUTH_EMAIL,
-        to: email,
-        subject: `Welcome to WaxMo`,
-        html: ` 
+	// MAILOPTIONS
+	const sendMailOptions = {
+		from: process.env.AUTH_EMAIL,
+		to: email,
+		subject: `Welcome to WaxMo`,
+		html: ` 
         <!DOCTYPE html>
         <html lang="en">
         
@@ -112,7 +114,7 @@ const sendVerification = async ({ _id, email, firstName }, res) => {
                         </div>
         
                 <div class="emailver">
-                    <p style="text-align: center;">Verify Account</p>
+                    <p style="text-align: center;">Email Verification</p>
                 </div>
         
                 <div class="hi">
@@ -123,7 +125,7 @@ const sendVerification = async ({ _id, email, firstName }, res) => {
         
                     <a style="margin-right: 100px; text-decoration: none;" href="${activateLink}">
                         <div class="button">
-                             Email Verification
+                        Verify Account 
                         </div>
                     </a>
         
@@ -166,32 +168,31 @@ const sendVerification = async ({ _id, email, firstName }, res) => {
         </body>
         
         </html>
-        `
-    }
+        `,
+	};
 
-    const newVerification = await UserVerification.create({
-        userId: _id,
-        uniqueString,
-        createdAt: Date.now(),
-        expiresAt: Date.now() + 3 * 60 * 60 * 1000
-    })
+	const newVerification = await UserVerification.create({
+		userId: _id,
+		uniqueString,
+		createdAt: Date.now(),
+		expiresAt: Date.now() + 3 * 60 * 60 * 1000,
+	});
 
-    if (newVerification) {
-        const sendMail = await transporter.sendMail(sendMailOptions)
-        if (sendMail) {
-            res.status(200).json({
-                status: 'Pending',
-                message: 'Check Your Mail'
-            })
+	if (newVerification) {
+		const sendMail = await transporter.sendMail(sendMailOptions);
+		if (sendMail) {
+			res.status(200).json({
+				status: 'Pending',
+				message: 'Check Your Mail',
+			});
+		} else {
+			res.status(401);
+			throw new Error('Mail Sending Failed');
+		}
+	} else {
+		res.status(401);
+		throw new Error('User Verification Creation Failed');
+	}
+};
 
-        } else {
-            res.status(401)
-            throw new Error('Mail Sending Failed')
-        }
-    } else {
-        res.status(401)
-        throw new Error('User Verification Creation Failed')
-    }
-}
-
-export default sendVerification
+export default sendVerification;
